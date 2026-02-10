@@ -1,0 +1,25 @@
+python : INFO:     Will watch for changes in 
+these directories: ['C:\\Users\\Max\\Desktop\\Gi
+tHub\\cloud-signal-engine\\signalforge\\backend'
+]
+At line:1 char:1
++ python -m uvicorn app.main:app --reload 
+--port 8000 > backend.log 2>& ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (IN 
+   FO:     Will ...orge\\backend']:String) [],  
+   RemoteException
+    + FullyQualifiedErrorId : NativeCommandErro 
+   r
+ 
+INFO:     Uvicorn running on 
+http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [16520] 
+using StatReload
+INFO:     Started server process [13952]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+DEBUG: Parsing timestamp: 2026-02-09T21:45:58.249452 type=<class 'str'>
+INFO:     127.0.0.1:53882 - "POST /api/v1/ingest HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:57676 - "GET /api/v1/alerts?limit=100 HTTP/1.1" 200 OK
