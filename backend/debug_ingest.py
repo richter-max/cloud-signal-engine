@@ -1,10 +1,10 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 import requests
 
 url = "http://localhost:8000/api/v1/ingest"
 event = {
-    "timestamp": datetime.utcnow().isoformat(),
+    "timestamp": datetime.now(UTC).isoformat(),
     "action": "test.action",
     "source_ip": "127.0.0.1",
     "outcome": "success",
