@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
-from typing import Any
+from typing import Any, Dict, List
 
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
@@ -64,7 +64,7 @@ class SuspiciousUserAgentRule(DetectionRule):
 
     def detect(
         self, db: Session, window_start: datetime, window_end: datetime
-    ) -> list[dict[str, Any]]:
+    ) -> List[Dict[str, Any]]:
         """Detect suspicious user agents."""
         # Get events with user agents
         events = (

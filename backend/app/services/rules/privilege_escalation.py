@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any
+from typing import Any, Dict, List
 
 from sqlalchemy import and_, or_
 from sqlalchemy.orm import Session
@@ -69,7 +69,7 @@ class PrivilegeEscalationRule(DetectionRule):
 
     def detect(
         self, db: Session, window_start: datetime, window_end: datetime
-    ) -> list[dict[str, Any]]:
+    ) -> List[Dict[str, Any]]:
         """Detect privilege escalation."""
         # Query privilege-related events
         events = (
