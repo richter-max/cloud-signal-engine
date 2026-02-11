@@ -1,12 +1,12 @@
 """Core detection engine."""
 
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
-from ..models import Alert, AllowlistEntry, AlertStatus
+from ..models import Alert, AlertStatus, AllowlistEntry
 from .rules.api_abuse import ApiAbuseRule
 from .rules.brute_force import BruteForceRule
 from .rules.impossible_travel import ImpossibleTravelRule
@@ -42,7 +42,7 @@ def run_detections(db: Session) -> dict:
     for rule in DETECTION_RULES:
         try:
             # Calculate time window for this rule
-            window_end = datetime.now(timezone.utc)
+            window_end = datetime.now(UTC)
             window_start = window_end - timedelta(minutes=rule.window_minutes)
 
             # Execute detection
@@ -154,7 +154,7 @@ def _is_allowlisted(db: Session, detection: dict) -> bool:
 def _is_duplicate(db: Session, detection: dict) -> bool:
     """Check if similar alert was recently created."""
     rule_id = detection["rule_id"]
-    evidence = detection.get("evidence", {})
+
 
     # Look for recent alerts (last 1 hour) with same rule
     recent_cutoff = datetime.utcnow() - timedelta(hours=1)

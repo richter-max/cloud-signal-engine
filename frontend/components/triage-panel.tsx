@@ -26,11 +26,11 @@ export function TriagePanel({ alert, onUpdate }: TriagePanelProps) {
             if (res.ok) {
                 onUpdate();
             } else {
-                alert("Failed to update status");
+                window.alert("Failed to update status");
             }
         } catch (error) {
             console.error("Error updating status:", error);
-            alert("Error updating status");
+            window.alert("Error updating status");
         } finally {
             setLoading(false);
         }
@@ -38,7 +38,7 @@ export function TriagePanel({ alert, onUpdate }: TriagePanelProps) {
 
     const markFalsePositive = async () => {
         if (!fpReason.trim()) {
-            alert("Please provide a reason");
+            window.alert("Please provide a reason");
             return;
         }
 
@@ -55,11 +55,11 @@ export function TriagePanel({ alert, onUpdate }: TriagePanelProps) {
                 setFpReason("");
                 onUpdate();
             } else {
-                alert("Failed to mark as false positive");
+                window.alert("Failed to mark as false positive");
             }
         } catch (error) {
             console.error("Error marking false positive:", error);
-            alert("Error marking false positive");
+            window.alert("Error marking false positive");
         } finally {
             setLoading(false);
         }

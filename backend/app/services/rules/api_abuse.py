@@ -1,9 +1,9 @@
 """API abuse / rate spike detection rule."""
 
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any
 
-from sqlalchemy import and_, func, or_
+from sqlalchemy import and_, func
 from sqlalchemy.orm import Session
 
 from ...models import Event
@@ -43,7 +43,7 @@ class ApiAbuseRule(DetectionRule):
 
     def detect(
         self, db: Session, window_start: datetime, window_end: datetime
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """Detect API abuse."""
         threshold = 100  # 100+ requests in 5 minutes
 

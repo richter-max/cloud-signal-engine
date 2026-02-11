@@ -3,13 +3,10 @@ Directly insert test data into the database for screenshots.
 Bypasses the API to avoid current 500 errors.
 """
 
-from datetime import datetime, timedelta, timezone
-import random
-import json
-from sqlalchemy.orm import Session
+from datetime import UTC, datetime, timedelta
 
-from app.database import SessionLocal, engine, Base
-from app.models import Event, Alert, AlertSeverity, AlertStatus, AllowlistEntry
+from app.database import Base, SessionLocal, engine
+from app.models import Alert, AlertSeverity, AlertStatus, Event
 
 # Ensure tables exist
 Base.metadata.create_all(bind=engine)
@@ -25,7 +22,7 @@ def create_test_data():
 
         print("🌱 Inserting new test data...")
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         events = []
         alerts = []
 

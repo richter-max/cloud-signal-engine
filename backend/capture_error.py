@@ -1,7 +1,6 @@
-import sys
 
 try:
-    with open("backend.log", "r", encoding="utf-16", errors="replace") as f:
+    with open("backend.log", encoding="utf-16", errors="replace") as f:
         lines = f.readlines()
         content = "".join(lines[-300:])
 

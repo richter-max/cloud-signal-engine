@@ -1,5 +1,6 @@
-import requests
 from datetime import datetime
+
+import requests
 
 url = "http://localhost:8000/api/v1/ingest"
 event = {

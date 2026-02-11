@@ -1,5 +1,5 @@
 from app.database import SessionLocal
-from app.models import Event, Alert
+from app.models import Alert, Event
 
 db = SessionLocal()
 try:

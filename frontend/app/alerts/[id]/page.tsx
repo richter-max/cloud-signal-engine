@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/types";
 import { SeverityBadge } from "@/components/severity-badge";
@@ -16,11 +16,7 @@ export default function AlertDetailPage({ params }: { params: { id: string } }) 
     const [alert, setAlert] = useState<Alert | null>(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchAlert();
-    }, [params.id]);
-
-    const fetchAlert = async () => {
+    const fetchAlert = useCallback(async () => {
         try {
             const res = await fetch(`/api/v1/alerts/${params.id}`);
             if (res.ok) {
@@ -35,7 +31,11 @@ export default function AlertDetailPage({ params }: { params: { id: string } }) 
         } finally {
             setLoading(false);
         }
-    };
+    }, [params.id, router]);
+
+    useEffect(() => {
+        fetchAlert();
+    }, [fetchAlert]);
 
     if (loading) {
         return (

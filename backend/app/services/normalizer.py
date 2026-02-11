@@ -1,13 +1,13 @@
 """Event normalization service."""
 
 import uuid
-from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from datetime import UTC, datetime
+from typing import Any
 
 from dateutil import parser
 
 
-def normalize_event(raw_event: Dict[str, Any]) -> Dict[str, Any]:
+def normalize_event(raw_event: dict[str, Any]) -> dict[str, Any]:
     """
     Normalize raw event data into canonical schema.
 
@@ -28,7 +28,7 @@ def normalize_event(raw_event: Dict[str, Any]) -> Dict[str, Any]:
         normalized["timestamp"] = _normalize_timestamp(timestamp)
     else:
         # Default to now if no timestamp
-        normalized["timestamp"] = datetime.now(timezone.utc)
+        normalized["timestamp"] = datetime.now(UTC)
 
     # Normalize actor (user, username, identity)
     normalized["actor"] = (
@@ -102,24 +102,24 @@ def _normalize_timestamp(timestamp: Any) -> datetime:
     if isinstance(timestamp, datetime):
         # Ensure UTC
         if timestamp.tzinfo is None:
-            return timestamp.replace(tzinfo=timezone.utc)
-        return timestamp.astimezone(timezone.utc)
+            return timestamp.replace(tzinfo=UTC)
+        return timestamp.astimezone(UTC)
 
     if isinstance(timestamp, (int, float)):
         # Unix timestamp (seconds or milliseconds)
         if timestamp > 1e10:  # Likely milliseconds
             timestamp = timestamp / 1000
-        return datetime.fromtimestamp(timestamp, tz=timezone.utc)
+        return datetime.fromtimestamp(timestamp, tz=UTC)
 
     if isinstance(timestamp, str):
         # ISO8601 or other string format
         dt = parser.parse(timestamp)
         if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=timezone.utc)
-        return dt.astimezone(timezone.utc)
+            dt = dt.replace(tzinfo=UTC)
+        return dt.astimezone(UTC)
 
     # Fallback to now
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def _normalize_action(action: str) -> str:
@@ -163,7 +163,7 @@ def _normalize_action(action: str) -> str:
     return normalized or action
 
 
-def _normalize_outcome(outcome: Any) -> Optional[str]:
+def _normalize_outcome(outcome: Any) -> str | None:
     """Normalize outcome to success, failure, or error."""
     if not outcome:
         return None

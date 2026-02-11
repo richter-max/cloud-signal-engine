@@ -1,6 +1,5 @@
 """Event ingestion endpoints."""
 
-from typing import List, Union
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -15,7 +14,7 @@ router = APIRouter()
 
 @router.post("/ingest", response_model=IngestResponse)
 async def ingest_events(
-    events: Union[List[EventCreate], EventCreate],
+    events: list[EventCreate] | EventCreate,
     db: Session = Depends(get_db),
 ):
     """
