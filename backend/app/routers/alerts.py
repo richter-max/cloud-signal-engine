@@ -21,7 +21,6 @@ from ..schemas import (
 router = APIRouter()
 
 
-
 @router.get("/alerts", response_model=list[AlertResponse])
 async def list_alerts(
     status: str | None = Query(None, description="Filter by status"),
@@ -30,7 +29,6 @@ async def list_alerts(
     limit: int = Query(50, le=500, description="Maximum number of alerts to return"),
     db: Session = Depends(get_db),
 ):
-
     """
     List alerts with optional filters.
 
@@ -96,7 +94,7 @@ async def update_alert_status(
         raise HTTPException(status_code=404, detail="Alert not found")
 
     alert.status = status_update.status.value
-    alert.updated_at = datetime.utcnow()
+    alert.updated_at = datetime.now(UTC)
 
     db.commit()
     db.refresh(alert)
@@ -125,7 +123,7 @@ async def mark_false_positive(
 
     # Update alert status
     alert.status = "false_positive"
-    alert.updated_at = datetime.utcnow()
+    alert.updated_at = datetime.now(UTC)
 
     # Record false positive
     fp = FalsePositive(
