@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import time
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
@@ -44,7 +44,7 @@ def run_detections(db: Session) -> dict:
     for rule in DETECTION_RULES:
         try:
             # Calculate time window for this rule
-            window_end = datetime.now(UTC)
+            window_end = datetime.now(timezone.utc)
             window_start = window_end - timedelta(minutes=rule.window_minutes)
 
             # Execute detection
@@ -102,7 +102,7 @@ def _is_allowlisted(db: Session, detection: dict) -> bool:
     actor = evidence.get("actor")
 
     # Check allowlist
-    now = datetime.now(UTC)
+    now = datetime.now(timezone.utc)
 
     # Check IP allowlist
     if source_ip:
@@ -158,7 +158,7 @@ def _is_duplicate(db: Session, detection: dict) -> bool:
     rule_id = detection["rule_id"]
 
     # Look for recent alerts (last 1 hour) with same rule
-    recent_cutoff = datetime.now(UTC) - timedelta(hours=1)
+    recent_cutoff = datetime.now(timezone.utc) - timedelta(hours=1)
 
     recent_alert = (
         db.query(Alert)

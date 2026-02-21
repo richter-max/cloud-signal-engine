@@ -1,0 +1,20 @@
+============================= test session starts =============================
+platform win32 -- Python 3.8.10, pytest-8.3.5, pluggy-1.5.0 -- C:\Users\Max\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\python.exe
+cachedir: .pytest_cache
+hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase(WindowsPath('C:/Users/Max/Desktop/GitHub/cloud-signal-engine/.hypothesis/examples'))
+rootdir: C:\Users\Max\Desktop\GitHub\cloud-signal-engine
+configfile: pyproject.toml
+plugins: anyio-4.5.2, hypothesis-6.113.0, asyncio-0.24.0, cov-5.0.0
+asyncio: mode=auto, default_loop_scope=function
+collecting ... collected 8 items
+
+backend/tests/test_rules.py::test_brute_force_rule PASSED                [ 12%]
+backend/tests/test_rules.py::test_password_spray_rule PASSED             [ 25%]
+backend/tests/test_rules.py::test_impossible_travel_rule PASSED          [ 37%]
+backend/tests/test_rules.py::test_suspicious_user_agent_rule PASSED      [ 50%]
+backend/tests/test_rules.py::test_api_abuse_rule PASSED                  [ 62%]
+backend/tests/test_rules.py::test_privilege_escalation_rule PASSED       [ 75%]
+backend/tests/test_rules.py::test_brute_force_no_alert_below_threshold PASSED [ 87%]
+backend/tests/test_rules.py::test_suspicious_api_key_rule PASSED         [100%]
+
+============================== 8 passed in 0.50s ==============================

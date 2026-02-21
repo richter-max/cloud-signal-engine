@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import and_, or_
 from sqlalchemy.orm import Session
@@ -21,11 +22,11 @@ from ..schemas import (
 router = APIRouter()
 
 
-@router.get("/alerts", response_model=list[AlertResponse])
+@router.get("/alerts", response_model=List[AlertResponse])
 async def list_alerts(
-    status: str | None = Query(None, description="Filter by status"),
-    severity: str | None = Query(None, description="Filter by severity"),
-    rule_id: str | None = Query(None, description="Filter by rule ID"),
+    status: Optional[str] = Query(None, description="Filter by status"),
+    severity: Optional[str] = Query(None, description="Filter by severity"),
+    rule_id: Optional[str] = Query(None, description="Filter by rule ID"),
     limit: int = Query(50, le=500, description="Maximum number of alerts to return"),
     db: Session = Depends(get_db),
 ):
@@ -138,7 +139,7 @@ async def mark_false_positive(
     return {"status": "success", "message": "Alert marked as false positive"}
 
 
-@router.get("/allowlist", response_model=list[AllowlistResponse])
+@router.get("/allowlist", response_model=List[AllowlistResponse])
 async def list_allowlist(db: Session = Depends(get_db)):
     """List all active allowlist entries."""
     now = datetime.now(timezone.utc)

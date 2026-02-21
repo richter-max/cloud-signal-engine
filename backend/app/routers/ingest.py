@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List, Union
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -15,7 +16,7 @@ router = APIRouter()
 
 @router.post("/ingest", response_model=IngestResponse)
 async def ingest_events(
-    events: list[EventCreate] | EventCreate,
+    events: Union[List[EventCreate], EventCreate],
     db: Session = Depends(get_db),
 ):
     """

@@ -1,6 +1,6 @@
 """Tests for event normalization."""
 
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 from app.services.normalizer import normalize_event
 
@@ -12,17 +12,17 @@ def test_normalize_timestamp_iso8601():
     normalized = normalize_event(event)
 
     assert isinstance(normalized["timestamp"], datetime)
-    assert normalized["timestamp"].tzinfo == UTC
+    assert normalized["timestamp"].tzinfo == timezone.utc
 
 
 def test_normalize_timestamp_unix():
     """Test Unix timestamp parsing."""
-    event = {"timestamp": 1707508800, "action": "user.login"}  # 2024-02-09 20:00:00 UTC
+    event = {"timestamp": 1707508800, "action": "user.login"}  # 2024-02-09 20:00:00 timezone.utc
 
     normalized = normalize_event(event)
 
     assert isinstance(normalized["timestamp"], datetime)
-    assert normalized["timestamp"].tzinfo == UTC
+    assert normalized["timestamp"].tzinfo == timezone.utc
 
 
 def test_normalize_actor_variations():
