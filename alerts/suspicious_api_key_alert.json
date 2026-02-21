@@ -1,0 +1,13 @@
+{
+    "severity": "medium",
+    "rule_id": "CSE-001",
+    "reason": "API key generated outside business hours",
+    "entity": "svc-backend-prod",
+    "evidence": {
+        "user": "svc-backend-prod",
+        "action": "GenerateAccessKey",
+        "timestamp": "2026-02-12T23:43:12Z",
+        "source_ip": "185.212.x.x",
+        "region": "eu-central-1"
+    }
+}
