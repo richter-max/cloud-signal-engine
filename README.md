@@ -361,24 +361,27 @@ Full API docs available at: http://localhost:8000/docs
 
 ---
 
-## 🚀 Roadmap
+## ⚖️ Tradeoffs & Limitations
 
-### v0.2.0 (Planned)
-- [ ] Machine learning-based anomaly detection
-- [ ] Integration with SIEM platforms (Splunk, Elastic)
-- [ ] WebSocket support for real-time alert streaming
-- [ ] PostgreSQL/MySQL support for production deployments
-- [ ] Kubernetes deployment configs
-- [ ] Enhanced GeoIP for impossible travel (GeoIP2 integration)
-- [ ] Custom detection rule builder UI
+### Tradeoffs
+*   **Simplicity vs. Scalability**: We prioritized a single-binary SQLite deployment for ease of review. While this doesn't scale to billions of events, it allows for zero-config setup and immediate evaluation.
+*   **Synchronous vs. Asynchronous**: The ingestion pipeline is synchronous to ensure ACID compliance and simplicity in the MVP.
+*   **Rule-Based vs. Statistical**: We focused on deterministic rules to provide high-fidelity alerts with clear evidence, accepting that we might miss some subtle anomalies that a behavioral model would catch.
 
-### v0.3.0 (Future)
-- [ ] Multi-tenancy support
-- [ ] Advanced correlation engine (alert chaining)
-- [ ] Threat intelligence feed integration
-- [ ] SOC automation workflows (SOAR integration)
-- [ ] Mobile-responsive UI improvements
+### Limitations
+*   **No Persistence for Events**: In the current MVP, raw events are stored in SQLite but not optimized for long-term retention or complex forensic queries across months of data.
+*   **No Real-Time Streaming**: Ingestion is via HTTP/NDJSON, but there is no native integration with Kafka or Kinesis for true real-time streaming ingestion.
+*   **No Multi-Tenancy**: The current architecture assumes a single organization/environment context.
 
+---
+
+## 🚀 Future Improvements
+
+*   **Streaming Ingestion**: Integration with AWS Kinesis and GCP Pub/Sub for native cloud event ingestion.
+*   **Stateful Correlation**: Expanding the rule engine to support multi-stage attacks (e.g., initial access → persistence → exfiltration).
+*   **GeoIP2 Integration**: Replacing the current heuristic distance estimation in the "Impossible Travel" rule with precision MaxMind GeoIP2 data.
+*   **Kubernetes Deployment**: Containerizing the backend and frontend with Helm charts for production-ready orchestration.
+*   **Performance Benchmarking**: Stress testing the normalization pipeline to determine events-per-second (EPS) limits.
 ---
 
 ## 🤝 Contributing
