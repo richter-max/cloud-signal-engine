@@ -103,6 +103,25 @@ Cloud Signal Engine is intentionally designed as a **minimalist detection pipeli
 
 ---
 
+## ⚙️ Engineering Decisions
+
+### Why Python?
+Python is the industry standard for detection engineering. It provides an extensive ecosystem for data manipulation and security analysis, making it the most accessible language for security engineers to write and maintain complex detection logic.
+
+### Why JSON Schema & NDJSON?
+We use JSON for its human-readable nature and native support in cloud platforms (AWS CloudTrail, GCP Audit). **NDJSON (Newline Delimited JSON)** is used for batch ingestion to allow streaming processing without loading large log files into memory.
+
+### Why Rule-Based over ML?
+Detection Engineering values **determinism** and **explainability**. While ML can catch "unknown unknowns," rule-based systems allow for precise alignment with threat models and MITRE ATT&CK, ensuring that every alert has a clear, actionable reason.
+
+### Why Synchronous Pipeline?
+For this project's scale, a synchronous ingestion-to-normalization pipeline ensures data integrity and simplifies the system. Async support is reserved for the Roadmap to avoid premature optimization and maintain architectural clarity.
+
+### Why Simple File-Based Evidence?
+The `alerts/` and `examples/` directories provide a portable, Git-friendly way to showcase detection artifacts. This makes the project's output immediately inspectable without requiring a running database for basic review.
+
+---
+
 ## 🛡️ Detection Rules
 
 SignalForge includes 6 production-ready detection rules mapped to MITRE ATT&CK:
